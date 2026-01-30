@@ -1,21 +1,86 @@
 {
-  "name": "antigravity",
-  "version": "0.1.0",
-  "type": "module",
-  "description": "MCP-backed agent runtime for OrchidsAI IDE",
+  "name": "@stifler7/antigravity",
+  "version": "0.2.0",
+  "description": "Universal LLM tool server - Connect Claude, OpenAI, and Gemini to your workspace",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "antigravity": "./dist/cli/index.js"
+  },
+  "license": "MIT",
+  "author": "STiFLeR7",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/STiFLeR7/antigravity"
+  },
+  "homepage": "https://github.com/STiFLeR7/antigravity#readme",
+  "bugs": {
+    "url": "https://github.com/STiFLeR7/antigravity/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./providers": {
+      "import": "./dist/providers/index.js",
+      "types": "./dist/providers/index.d.ts"
+    },
+    "./server": {
+      "import": "./dist/server/index.js",
+      "types": "./dist/server/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
-    "test": "jest"
+    "dev": "tsc --watch",
+    "start": "node dist/cli/index.js serve",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write src/**/*.ts",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run build && npm test -- --run"
   },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "openai",
+    "gemini",
+    "chatgpt",
+    "gpt-4",
+    "agent",
+    "ai-tools",
+    "function-calling",
+    "llm",
+    "anthropic",
+    "google-ai",
+    "tool-server",
+    "ide-tools"
+  ],
   "dependencies": {
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "uuid": "^9.0.1",
+    "eventemitter3": "^5.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
-    "typescript": "^5.3.3",
-    "ts-node": "^10.9.2"
+    "@types/node": "^20.10.0",
+    "@types/uuid": "^9.0.7",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0",
+    "eslint": "^8.55.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "prettier": "^3.1.0",
+    "rimraf": "^5.0.5"
   }
 }

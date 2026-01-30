@@ -1,0 +1,296 @@
+# **Statement of Work (SoW)**
+
+## **Antigravity**
+
+### *MCP-Backed Agent Runtime for OrchidsAI IDE*
+
+---
+
+## 1. Purpose & Vision
+
+**Antigravity** is an MCP-backed agent runtime designed to operate inside **OrchidsAI IDE**, enabling autonomous, structured, and auditable interaction with real-world development environments.
+
+The goal is **not** to build a “magic code generator”, but to design a **disciplined agent system** that can:
+
+* reason about tasks
+* plan multi-step actions
+* interact with a project workspace
+* persist state across time
+* remain inspectable, debuggable, and safe
+
+Antigravity serves as the **execution spine** for agentic workflows within OrchidsAI IDE.
+
+---
+
+## 2. Non-Goals (Explicit Constraints)
+
+To avoid scope creep, Antigravity will **not**:
+
+* train or modify foundation models
+* operate outside sandboxed environments
+* perform unrestricted system access
+* replace human developers
+* optimize for large-scale distributed usage (initially)
+
+Correctness, clarity, and composability take priority over scale.
+
+---
+
+## 3. System Scope Overview
+
+Antigravity consists of five major subsystems:
+
+1. **Agent Decision Loop**
+2. **MCP Runtime (Context + Tool Contracts)**
+3. **Tooling Layer (Filesystem, Execution, Git, etc.)**
+4. **State & Memory Management**
+5. **OrchidsAI IDE Integration Layer**
+
+Each subsystem is built incrementally across phases.
+
+---
+
+## 4. Phase-Wise Execution Plan (To-Do Driven)
+
+---
+
+## **PHASE 0 — Foundations & Design Lock**
+
+**Objective:** Establish architectural clarity before writing production code.
+
+### Deliverables
+
+* High-level architecture diagram
+* MCP schema specification (v0)
+* Agent lifecycle definition
+* Explicit trust & permission boundaries
+
+### To-Do Tasks
+
+* Define Antigravity’s responsibility boundaries inside OrchidsAI IDE
+* Specify the agent lifecycle:
+  `Goal → Plan → Act → Observe → Reflect → Continue`
+* Design MCP context schema:
+
+  * user intent
+  * workspace metadata
+  * memory references
+  * last action results
+* Define tool contract format (JSON schema based)
+* Document failure semantics (what happens when tools fail)
+
+**Exit Criteria**
+
+* Architecture frozen
+* No ambiguity in agent vs MCP responsibilities
+
+---
+
+## **PHASE 1 — Core Agent Runtime**
+
+**Objective:** Build the minimal agent loop without real-world side effects.
+
+### Deliverables
+
+* Deterministic agent execution loop
+* Action planning interface
+* Observation ingestion pipeline
+
+### To-Do Tasks
+
+* Implement agent loop controller
+* Add step counter and termination rules
+* Introduce explicit “next action” representation
+* Support reflection steps without tool execution
+* Log every decision deterministically
+
+**Exit Criteria**
+
+* Agent can plan and iterate without tools
+* Loop is observable and replayable
+
+---
+
+## **PHASE 2 — MCP Runtime Implementation**
+
+**Objective:** Make Antigravity capable of interacting with the world via structure.
+
+### Deliverables
+
+* MCP runtime engine
+* Context manager
+* Tool registry and dispatcher
+
+### To-Do Tasks
+
+* Implement MCP context container
+* Build tool registration mechanism
+* Enforce strict input/output schemas
+* Add tool permission scoping
+* Implement tool invocation dispatcher
+* Capture tool outputs into context state
+
+**Exit Criteria**
+
+* Tools can be called safely
+* Context evolves predictably after each action
+
+---
+
+## **PHASE 3 — Workspace Tooling (Coding Core)**
+
+**Objective:** Enable real code interaction inside a controlled directory.
+
+### Deliverables
+
+* Filesystem MCP tools
+* Code-safe write mechanisms
+* Workspace sandboxing
+
+### To-Do Tasks
+
+* Implement `list_directory`
+* Implement `read_file`
+* Implement `write_file` (no blind overwrite)
+* Implement `apply_diff`
+* Add directory sandbox enforcement
+* Snapshot workspace state after each action
+
+**Exit Criteria**
+
+* Agent can read and write code safely
+* All changes are traceable and reversible
+
+---
+
+## **PHASE 4 — Execution & Validation Tools**
+
+**Objective:** Allow Antigravity to reason about outcomes, not just write files.
+
+### Deliverables
+
+* Command execution tools
+* Test & build feedback loops
+* Structured error reporting
+
+### To-Do Tasks
+
+* Implement safe command execution tool
+* Capture stdout/stderr as structured output
+* Allow agent to interpret failures
+* Add retry & correction logic
+* Enforce execution time and resource limits
+
+**Exit Criteria**
+
+* Agent can validate its own output
+* Failures inform next decisions
+
+---
+
+## **PHASE 5 — Memory & Persistence**
+
+**Objective:** Make Antigravity stateful across sessions.
+
+### Deliverables
+
+* Short-term memory store
+* Long-term memory adapter
+* Context rehydration
+
+### To-Do Tasks
+
+* Implement session memory
+* Persist task-level summaries
+* Attach memory references to MCP context
+* Prevent memory pollution
+* Define memory expiration rules
+
+**Exit Criteria**
+
+* Agent continuity across IDE sessions
+* Memory improves behavior, not noise
+
+---
+
+## **PHASE 6 — OrchidsAI IDE Integration**
+
+**Objective:** Embed Antigravity cleanly into OrchidsAI IDE.
+
+### Deliverables
+
+* IDE-facing API
+* UI trigger hooks
+* Execution visualization
+
+### To-Do Tasks
+
+* Expose Antigravity as an IDE service
+* Bind agent actions to IDE commands
+* Stream agent reasoning & actions
+* Show file diffs and execution logs
+* Support user interrupt / override
+
+**Exit Criteria**
+
+* Antigravity feels native inside OrchidsAI IDE
+* Users can trust and supervise the agent
+
+---
+
+## **PHASE 7 — Safety, Evaluation & Observability**
+
+**Objective:** Make Antigravity reliable, not just functional.
+
+### Deliverables
+
+* Action tracing
+* Evaluation hooks
+* Safety constraints
+
+### To-Do Tasks
+
+* Add per-step trace logs
+* Implement replay mode
+* Add guardrails for destructive actions
+* Build evaluation scenarios
+* Measure task success & failure modes
+
+**Exit Criteria**
+
+* System is inspectable
+* Failures are understandable
+* Behavior is predictable
+
+---
+
+## 5. Success Metrics
+
+Antigravity is considered successful when:
+
+* It can autonomously modify a real codebase safely
+* Every action is explainable post-hoc
+* Errors lead to recovery, not collapse
+* MCP contracts remain stable across iterations
+* IDE users trust the agent’s behavior
+
+---
+
+## 6. Long-Term Extension (Post-SoW)
+
+Out of initial scope but planned:
+
+* Multi-agent collaboration
+* Cross-project reasoning
+* IDE-to-cloud agent handoff
+* MCP federation across tools
+
+---
+
+## 7. Final Positioning Statement
+
+> **Antigravity is not an AI feature.
+> It is an execution discipline for agentic systems.**
+
+This SoW ensures Antigravity evolves as a **system**, not a demo — aligned with MCP principles and IDE-grade reliability.
+

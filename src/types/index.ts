@@ -1,37 +1,69 @@
-export type AgentState = 'idle' | 'planning' | 'acting' | 'observing' | 'reflecting' | 'completed' | 'failed';
+/**
+ * @fileoverview Public type exports for Antigravity.
+ * 
+ * This module re-exports all public types from the types directory,
+ * providing a single import point for consumers.
+ * 
+ * @module @orchidsai/antigravity/types
+ * @version 0.1.0
+ */
 
-export interface Action {
-  tool: string;
-  parameters: Record<string, any>;
-  reasoning: string;
-}
+// Core types
+export {
+  type UniqueId,
+  type Timestamp,
+  AgentPhase,
+  ActionOutcome,
+  Priority,
+  Severity,
+  type UserIntent,
+  type WorkspaceMetadata,
+  type TextRange,
+  type ToolResult,
+  type ToolError,
+  type AgentStep,
+  type ToolInvocation,
+  type AgentConfig,
+  createUniqueId,
+  createTimestamp,
+  DEFAULT_AGENT_CONFIG,
+} from './core.types.js';
 
-export interface Observation {
-  success: boolean;
-  data?: any;
-  error?: string;
-  timestamp: number;
-}
+// MCP types
+export {
+  type MCPContext,
+  type MemoryReference,
+  MemoryType,
+  type ContextFact,
+  FactCategory,
+  type ExecutionConstraint,
+  ConstraintType,
+  type ExecutionPlan,
+  type PlannedAction,
+  PlannedActionStatus,
+  type MCPMessage,
+  MCPMessageType,
+  type MCPSchema,
+} from './mcp.types.js';
 
-export interface HistoryEntry {
-  step: number;
-  state: AgentState;
-  action?: Action;
-  observation?: Observation;
-  thought?: string;
-}
-
-export interface AgentContext {
-  intent: string;
-  history: HistoryEntry[];
-  maxSteps: number;
-  currentStep: number;
-  metadata: Record<string, any>;
-}
-
-export interface LoopResult {
-  success: boolean;
-  finalState: AgentState;
-  history: HistoryEntry[];
-  error?: string;
-}
+// Tool types
+export {
+  type ToolDefinition,
+  ToolCategory,
+  ToolPermission,
+  type ToolExecutor,
+  type ToolValidator,
+  type ValidationResult,
+  type ValidationError,
+  type ValidationWarning,
+  type ToolExecutionContext,
+  type ExecutionLogger,
+  type ToolRegistryEntry,
+  type ToolInvocationRequest,
+  ToolPermissionSchema,
+  ToolCategorySchema,
+  ValidationErrorSchema,
+  ValidationResultSchema,
+  validationSuccess,
+  validationFailure,
+} from './tools.types.js';

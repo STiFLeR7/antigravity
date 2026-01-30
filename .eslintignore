@@ -1,0 +1,8 @@
+# ESLint ignore patterns
+node_modules/
+dist/
+examples/
+**/*.test.ts
+
+# CLI uses console intentionally
+src/cli/
